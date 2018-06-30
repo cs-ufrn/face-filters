@@ -101,7 +101,7 @@ def draw_sprite(frame, sprite, x_offset, y_offset):
         sprite = sprite[:img_h-y_offset,:,:]
 
     if x_offset+sprite_w >= img_w:
-        sprite = sprite[:,0:imgW-x_offset,:]
+        sprite = sprite[:,0:img_w-x_offset,:]
 
     right = x_offset+sprite_w
     bottom = y_offset+sprite_h
