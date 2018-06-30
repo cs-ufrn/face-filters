@@ -1,0 +1,27 @@
+body {
+	color:#9FB1B2;
+	font-family:Arial, Helvetica, sans-serif;
+	background-color:#212b2d;
+}
+
+center {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 100%;
+}
+
+.btn {
+	width:64px;
+	padding-left: 16px;
+	padding-right: 16px;
+	background-color:#4b5455;
+
+	color:#0a0800;
+	font-size:24px;
+	text-decoration:none;
+	font-weight:bold;
+}
+
+ext-decoration:none;
+}
