@@ -1,11 +1,19 @@
 #!/usr/bin/env python
+import os
 import shutil
 from flask import Flask, render_template, \
     Response, send_file, redirect, url_for
 from camera import Camera
 
 app = Flask(__name__)
-camera = Camera()
+camera = None
+
+def get_camera():
+    global camera
+    if not camera:
+        camera = Camera()
+
+    return camera
 
 @app.route('/')
 def root():
@@ -23,11 +31,13 @@ def gen(camera, mode):
 
 @app.route('/video_feed/<mode>')
 def video_feed(mode):
+    camera = get_camera()
     return Response(gen(camera, mode),
         mimetype='multipart/x-mixed-replace; boundary=frame')
 
 @app.route('/capture/<mode>')
 def capture(mode):
+    camera = get_camera()
     stamp = camera.capture(mode)
     return redirect(url_for('show_capture', timestamp=stamp))
 
@@ -44,8 +54,15 @@ def show_capture(timestamp):
 @app.route('/save/image/<timestamp>')
 def save(timestamp):
     path = "static/" + stamp_file(timestamp)
-    shutil.copy(path, "saved/")
+    save_dir = "saved"
+
+    try:
+        shutil.copy(path, save_dir)
+    except OSError:
+        os.mkdir(save_dir)
+        shutil.copy(path, save_dir)
+
     return redirect(url_for('show_capture', timestamp=timestamp))
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', debug=True)
+    app.run(host='0.0.0.0', port=8080, debug=True)
