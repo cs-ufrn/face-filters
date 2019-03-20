@@ -54,7 +54,7 @@ def show_capture(timestamp):
 @app.route('/save/image/<timestamp>')
 def save(timestamp):
     path = "static/" + stamp_file(timestamp)
-    save_dir = "saved"
+    save_dir = "saved/"
 
     try:
         shutil.copy(path, save_dir)
