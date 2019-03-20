@@ -109,9 +109,9 @@ def draw_sprite(frame, sprite, x_offset, y_offset):
     rgb_channels = 3
 
     for c in range(rgb_channels):
-            frame[y_offset:bottom, x_offset:right, c] = \
-                sprite[:,:,c] * sprite_alpha + \
-                frame[y_offset:bottom, x_offset:right, c] * (1.0 - sprite_alpha)
+        frame[y_offset:bottom, x_offset:right, c] = \
+            sprite[:,:,c] * sprite_alpha + \
+            frame[y_offset:bottom, x_offset:right, c] * (1.0 - sprite_alpha)
     return frame
 
 
