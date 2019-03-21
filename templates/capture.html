@@ -10,9 +10,17 @@
         <a href="{{ url_for('root') }}">
           <img src="{{ url_for('static',filename='back.png') }}" alt="go back" class="btn"> 
         </a>
-          <a href="{{ url_for('save', timestamp=stamp) }}">
+        <a href="{{ url_for('save', timestamp=stamp) }}">
           <img src="{{ url_for('static',filename='save.png') }}" alt="save picture" class="btn">
-          </a>
+        </a>
+        <form method="post">
+          <legend>Send image to your email</legend>
+          <input type="email" name="email" placeholder="Email">
+          <button type="submit">Send</button>
+        </form>
+        {% if email_msg %}
+          <strong>{{ email_msg }}</strong>
+        {% endif %}
       </p>
 	  	</div>
 		</center>
