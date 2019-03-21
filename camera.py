@@ -34,7 +34,7 @@ class Camera(object):
         if (Camera.RESIZE_RATIO != 1):
             frame = cv.resize(frame, None, fx=Camera.RESIZE_RATIO, \
                 fy=Camera.RESIZE_RATIO)
-        self.facemark(frame, mode)
+        frame = self.facemark(frame, mode)
 
         ret, jpeg = cv.imencode('.jpg', frame)
         return jpeg.tobytes()
@@ -44,7 +44,7 @@ class Camera(object):
         if (Camera.RESIZE_RATIO != 1):
             frame = cv.resize(frame, None, fx=Camera.RESIZE_RATIO, \
                 fy=Camera.RESIZE_RATIO)
-        self.facemark(frame, mode)
+        frame = self.facemark(frame, mode)
         _, jpeg = cv.imencode('.jpg', frame)
         timestamp = strftime("%d-%m-%Y-%Hh%Mm%Ss", localtime())
         filename = Camera.CAPTURES_DIR + timestamp +".jpg"
@@ -76,4 +76,6 @@ class Camera(object):
             if mode in ('clown', 'crazy'):
                 nose = get_feature_boundbox(shape, 'nose')
                 apply_sprite(frame, "sprites/clown_nose.png", nose, inclination)
+
+        return frame
 
