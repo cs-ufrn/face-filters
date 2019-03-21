@@ -27,6 +27,15 @@
         <a href="{{ url_for('index', mode='crazy') }}" class='btn'>
           Crazy 
         </a>
+        <a href="{{ url_for('index', mode='anon') }}" class='btn'>
+          Anonymous 
+        </a>
+        <a href="{{ url_for('index', mode='drawing') }}" class='btn'>
+          Drawing
+        </a>
+        <a href="{{ url_for('index', mode='mask') }}" class='btn'>
+          Mask
+        </a>
       </p>
 	    <img src="{{ url_for('video_feed', mode=mode) }}" alt="video feed">
 	    <p>
