@@ -24,6 +24,8 @@ def get_feature_boundbox(shape, face_part):
     part_points = {'leyebrow':[(17,22)], 'reyebrow':[(22,27)],
         'leye':[(36,42)], 'reye':[(42,48)], 'nose':[(29,36)],
         'lips':[(48,68)], 'mouth':[(56,59), (61,64)]}
+    part_points['face'] = [(0, 17), *part_points['leyebrow'],
+        *part_points['reyebrow']]
 
     if face_part in part_points:
         all_points = shape.parts()
