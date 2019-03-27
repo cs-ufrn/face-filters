@@ -9,7 +9,6 @@ def draw_face(frame, shape):
     p1 = (rect.left(), rect.top())
     p2 = (rect.right(), rect.bottom())
     cv.rectangle(frame, p1, p2, (0,255,0))
-
     for point in shape.parts():
         cv.circle(frame, (point.x, point.y), 2, (0, 0, 255), cv.FILLED)
 
@@ -24,6 +23,7 @@ def get_feature_boundbox(shape, face_part):
     part_points = {'leyebrow':[(17,22)], 'reyebrow':[(22,27)],
         'leye':[(36,42)], 'reye':[(42,48)], 'nose':[(29,36)],
         'lips':[(48,68)], 'mouth':[(56,59), (61,64)]}
+
     part_points['face'] = [(0, 17), *part_points['leyebrow'],
         *part_points['reyebrow']]
 
@@ -155,7 +155,7 @@ if __name__ == "__main__":
 
                 nose = get_feature_boundbox(shape, 'nose')
                 apply_sprite(frame, "sprites/clown_nose.png", nose, inclination)
-
+                
             cv.imshow(window_name, frame)
             key = cv.waitKey(1)
 

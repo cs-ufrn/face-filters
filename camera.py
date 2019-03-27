@@ -76,6 +76,16 @@ class Camera(object):
             if mode in ('clown', 'crazy'):
                 nose = get_feature_boundbox(shape, 'nose')
                 apply_sprite(frame, "sprites/clown_nose.png", nose, inclination)
+            if mode in ('anon_mask',"incredibles_mask","who_mask"):
+                if mode == "anon_mask":
+                    appearance = get_feature_boundbox(shape, 'face')
+                    apply_sprite(frame, "sprites/anon_mask.png", appearance, inclination)
+                if mode == "incredibles_mask":
+                    appearance = get_feature_boundbox(shape, 'face')
+                    apply_sprite(frame, "sprites/incredibles_mask.png", appearance, inclination)
+                if mode == "who_mask":
+                    appearance = get_feature_boundbox(shape, 'face')
+                    apply_sprite(frame, "sprites/who_mask.png", appearance, inclination)
 
         return frame
 

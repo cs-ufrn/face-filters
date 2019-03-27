@@ -11,17 +11,30 @@ center {
     width: 100%;
 }
 
-.btn {
-	width:64px;
-	padding-left: 16px;
-	padding-right: 16px;
-	background-color:#4b5455;
+select{
+	background-color: #4b5455;
+	border-width: 0px;
+	-moz-appearance:none;
+	-webkit-appearance: none;
+}
 
+.menu-bar{
+	margin-top: 15px;
+	background-color:#4b5455;
+}
+
+.btn {
+	padding: 5px 8px 5px 8px;
 	color:#0a0800;
 	font-size:24px;
 	text-decoration:none;
 	font-weight:bold;
 }
 
-ext-decoration:none;
+.btn:hover{
+	background-color: #EEE;
+}
+
+.capture-button{
+	width: 64px;
 }
