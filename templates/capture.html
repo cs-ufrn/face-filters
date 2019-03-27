@@ -10,7 +10,7 @@
         <a href="{{ url_for('root') }}">
           <img src="{{ url_for('static',filename='back.png') }}" alt="go back" class="btn"> 
         </a>
-        <a href="{{ url_for('save', timestamp=stamp) }}">
+        <a href="{{ url_for('static', filename=path) }}" download>
           <img src="{{ url_for('static',filename='save.png') }}" alt="save picture" class="btn">
         </a>
         <form method="post">
