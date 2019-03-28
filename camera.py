@@ -33,13 +33,9 @@ class Camera(object):
 
         if (Camera.RESIZE_RATIO != 1):
             frame = cv.resize(frame, None, fx=Camera.RESIZE_RATIO, \
-                fy=Camera.RESIZE_RATIO)
-    
-        if mode == "drawing":
-            frame = drawing_frame(frame)
-        else:
-            frame = self.facemark(frame, mode)
-        
+                fy=Camera.RESIZE_RATIO)    
+        frame = self.facemark(frame, mode)
+
         ret, jpeg = cv.imencode('.jpg', frame)
         return jpeg.tobytes()
 
@@ -58,38 +54,40 @@ class Camera(object):
 
     def facemark(self, frame, mode):
         gray = cv.cvtColor(frame, cv.COLOR_BGR2GRAY)
+        if mode == "drawing":
+            frame = drawing_frame(gray)
+        else:
+            faces = self.face_detector(gray, upsample_num_times=0)
+            for face in faces:
+                shape = self.facemark_detector(gray, face)
 
-        faces = self.face_detector(gray, upsample_num_times=0)
-        for face in faces:
-            shape = self.facemark_detector(gray, face)
+                if mode != 'landmark':
+                    inclination = get_inclination(shape)
 
-            if mode != 'landmark':
-                inclination = get_inclination(shape)
+                if mode == 'landmark':
+                    draw_face(frame, shape)
+                if mode in Camera.EYE_SPRITES.keys():
+                    leye = get_feature_boundbox(shape, 'leyebrow')
+                    reye = get_feature_boundbox(shape, 'reyebrow')
 
-            if mode == 'landmark':
-                draw_face(frame, shape)
-            if mode in Camera.EYE_SPRITES.keys():
-                leye = get_feature_boundbox(shape, 'leyebrow')
-                reye = get_feature_boundbox(shape, 'reyebrow')
-
-                apply_sprite(frame, "sprites/"+Camera.EYE_SPRITES[mode][0], leye, inclination)
-                apply_sprite(frame, "sprites/"+Camera.EYE_SPRITES[mode][1], reye, inclination)
-            if mode in ('rainbow', 'crazy') and is_mouth_open(shape, threshold=20):
-                mouth = get_feature_boundbox(shape, 'lips')
-                apply_sprite(frame, "sprites/rainbow.png", mouth, inclination)
-            if mode in ('clown', 'crazy'):
-                nose = get_feature_boundbox(shape, 'nose')
-                apply_sprite(frame, "sprites/clown_nose.png", nose, inclination)
-            if mode in ('anon_mask',"incredibles_mask","who_mask"):
-                if mode == "anon_mask":
-                    appearance = get_feature_boundbox(shape, 'face')
-                    apply_sprite(frame, "sprites/anon_mask.png", appearance, inclination)
-                if mode == "incredibles_mask":
-                    appearance = get_feature_boundbox(shape, 'face')
-                    apply_sprite(frame, "sprites/incredibles_mask.png", appearance, inclination)
-                if mode == "who_mask":
-                    appearance = get_feature_boundbox(shape, 'face')
-                    apply_sprite(frame, "sprites/who_mask.png", appearance, inclination)
+                    apply_sprite(frame, "sprites/"+Camera.EYE_SPRITES[mode][0], leye, inclination)
+                    apply_sprite(frame, "sprites/"+Camera.EYE_SPRITES[mode][1], reye, inclination)
+                if mode in ('rainbow', 'crazy') and is_mouth_open(shape, threshold=20):
+                    mouth = get_feature_boundbox(shape, 'lips')
+                    apply_sprite(frame, "sprites/rainbow.png", mouth, inclination)
+                if mode in ('clown', 'crazy'):
+                    nose = get_feature_boundbox(shape, 'nose')
+                    apply_sprite(frame, "sprites/clown_nose.png", nose, inclination)
+                if mode in ('anon_mask',"incredibles_mask","who_mask"):
+                    if mode == "anon_mask":
+                        appearance = get_feature_boundbox(shape, 'face')
+                        apply_sprite(frame, "sprites/anon_mask.png", appearance, inclination)
+                    if mode == "incredibles_mask":
+                        appearance = get_feature_boundbox(shape, 'face')
+                        apply_sprite(frame, "sprites/incredibles_mask.png", appearance, inclination)
+                    if mode == "who_mask":
+                        appearance = get_feature_boundbox(shape, 'face')
+                        apply_sprite(frame, "sprites/who_mask.png", appearance, inclination)
 
         return frame
 
