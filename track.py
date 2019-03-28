@@ -85,6 +85,14 @@ def adjust_sprite(sprite, head_width, head_y):
     sprite_y = head_y
     return (sprite, sprite_y)
 
+def drawing_frame(frame):
+    if len(frame.shape) > 2:
+        frame = cv.cvtColor(frame, cv.COLOR_BGR2GRAY)
+    vertical = cv.Sobel(frame, cv.CV_64F, 1,0, ksize=1)
+    horizontal = cv.Sobel(frame, cv.CV_64F,0,1,ksize=1)
+    return cv.sqrt(cv.pow(horizontal,2) + cv.pow(vertical,2))
+
+
 def draw_sprite(frame, sprite, x_offset, y_offset):
     sprite_h, sprite_w = sprite.shape[0], sprite.shape[1]
     img_h, img_w = frame.shape[0], frame.shape[1]

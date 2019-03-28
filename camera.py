@@ -2,7 +2,7 @@ import cv2 as cv
 import dlib
 from time import localtime, strftime
 from track import draw_face, get_feature_boundbox, \
-    get_inclination, apply_sprite, is_mouth_open
+    get_inclination, apply_sprite, is_mouth_open, drawing_frame
 
 class Camera(object):
     CAPTURES_DIR = "static/captures/"
@@ -34,8 +34,12 @@ class Camera(object):
         if (Camera.RESIZE_RATIO != 1):
             frame = cv.resize(frame, None, fx=Camera.RESIZE_RATIO, \
                 fy=Camera.RESIZE_RATIO)
-        frame = self.facemark(frame, mode)
-
+    
+        if mode == "drawing":
+            frame = drawing_frame(frame)
+        else:
+            frame = self.facemark(frame, mode)
+        
         ret, jpeg = cv.imencode('.jpg', frame)
         return jpeg.tobytes()
 
