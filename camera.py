@@ -2,7 +2,7 @@ import cv2 as cv
 import dlib
 from time import localtime, strftime
 from track import draw_face, get_feature_boundbox, \
-    get_inclination, apply_sprite, is_mouth_open, drawing_frame, pixel
+    get_inclination, apply_sprite, is_mouth_open, drawing_frame, apply_blur, pixel
 
 class Camera(object):
     CAPTURES_DIR = "static/captures/"
@@ -55,7 +55,7 @@ class Camera(object):
     def facemark(self, frame, mode):
         gray = cv.cvtColor(frame, cv.COLOR_BGR2GRAY)
         if mode == "drawing":
-            frame = drawing_frame(gray)
+            frame = drawing_frame(gray)        
         else:
             faces = self.face_detector(gray, upsample_num_times=0)
             for face in faces:                
@@ -72,7 +72,6 @@ class Camera(object):
                     if mode in Camera.EYE_SPRITES.keys():
                         leye = get_feature_boundbox(shape, 'leyebrow')
                         reye = get_feature_boundbox(shape, 'reyebrow')
-
                         apply_sprite(frame, "sprites/"+Camera.EYE_SPRITES[mode][0], leye, inclination)
                         apply_sprite(frame, "sprites/"+Camera.EYE_SPRITES[mode][1], reye, inclination)
                     if mode in ('rainbow', 'crazy') and is_mouth_open(shape, threshold=20):
@@ -91,6 +90,8 @@ class Camera(object):
                         if mode == "who_mask":
                             appearance = get_feature_boundbox(shape, 'face')
                             apply_sprite(frame, "sprites/who_mask.png", appearance, inclination)
-
+                    elif mode == "anon":
+                        appearance = get_feature_boundbox(shape, 'face')
+                        frame = apply_blur(frame, shape)
         return frame
 

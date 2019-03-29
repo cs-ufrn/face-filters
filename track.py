@@ -141,6 +141,14 @@ def draw_sprite(frame, sprite, x_offset, y_offset):
             frame[y_offset:bottom, x_offset:right, c] * (1.0 - sprite_alpha)
     return frame
 
+def apply_blur(frame, shape):
+   rect = shape.rect
+   left,top,right,bot = rect.left(), rect.top(), rect.right(), rect.bottom()
+   frame[top:top+int(bot/1.5), left:left+right//2] = cv.blur(frame[top:top+int(bot/1.5), left:left+right//2],(60,60))
+   print(top, bot, left, right)
+   return frame
+
+
 
 if __name__ == "__main__":
     # load face detector
