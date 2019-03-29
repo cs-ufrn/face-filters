@@ -90,6 +90,25 @@ def drawing_frame(frame):
     horizontal = cv.Sobel(frame, cv.CV_64F,0,1,ksize=1)
     return cv.sqrt(cv.pow(horizontal,2) + cv.pow(vertical,2))
 
+def pixel(frame, face, block_size):
+    left = face.left()
+    top = face.top()
+    right = face.right()
+    bottom = face.bottom()
+
+    frame_result = frame.copy()
+
+    for row in range(top, bottom, block_size):
+        for col in range(left,right, block_size):
+
+            max_col = min(col+block_size, right)
+            max_row = min(row+block_size, bottom)
+
+            frame_result[ row:max_row,col:max_col,0 ] = np.mean( frame[ row:max_row,col:max_col,0 ] )
+            frame_result[ row:max_row,col:max_col,1 ] = np.mean( frame[ row:max_row,col:max_col,1 ] )
+            frame_result[ row:max_row,col:max_col,2 ] = np.mean( frame[ row:max_row,col:max_col,2 ] )
+
+    return frame_result
 
 def draw_sprite(frame, sprite, x_offset, y_offset):
     sprite_h, sprite_w = sprite.shape[0], sprite.shape[1]
