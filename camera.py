@@ -2,7 +2,7 @@ import cv2 as cv
 import dlib
 from time import localtime, strftime
 from track import draw_face, get_feature_boundbox, \
-    get_inclination, apply_sprite, is_mouth_open, drawing_frame
+    get_inclination, apply_sprite, is_mouth_open
 
 class Camera(object):
     CAPTURES_DIR = "static/captures/"
@@ -33,7 +33,7 @@ class Camera(object):
 
         if (Camera.RESIZE_RATIO != 1):
             frame = cv.resize(frame, None, fx=Camera.RESIZE_RATIO, \
-                fy=Camera.RESIZE_RATIO)    
+                fy=Camera.RESIZE_RATIO)
         frame = self.facemark(frame, mode)
 
         ret, jpeg = cv.imencode('.jpg', frame)
@@ -56,6 +56,8 @@ class Camera(object):
         gray = cv.cvtColor(frame, cv.COLOR_BGR2GRAY)
         if mode == "drawing":
             frame = drawing_frame(gray)
+        if mode == "anon":
+            frame = cv.blur(frame, (15,5))    
         else:
             faces = self.face_detector(gray, upsample_num_times=0)
             for face in faces:
@@ -90,4 +92,3 @@ class Camera(object):
                         apply_sprite(frame, "sprites/who_mask.png", appearance, inclination)
 
         return frame
-
