@@ -58,12 +58,12 @@ class Camera(object):
             frame = drawing_frame(gray)        
         else:
             faces = self.face_detector(gray, upsample_num_times=0)
-            for face in faces:                
-                if mode == 'pixel':
-                    frame = pixel(frame, face, 20)
-                else:
-                    shape = self.facemark_detector(gray, face)
+            for face in faces:
+                shape = self.facemark_detector(gray, face)
 
+                if mode == 'pixel':
+                    frame = pixel(frame, face, shape, 20)
+                else:
                     if mode != 'landmark':
                         inclination = get_inclination(shape)
 

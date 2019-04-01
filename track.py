@@ -90,7 +90,15 @@ def drawing_frame(frame):
     horizontal = cv.Sobel(frame, cv.CV_64F,0,1,ksize=1)
     return cv.sqrt(cv.pow(horizontal,2) + cv.pow(vertical,2))
 
-def pixel(frame, face, block_size):
+def __shape_to_np__(shape, dtype="int"):
+    coords = np.zeros((shape.num_parts, 2), dtype=dtype)
+    
+    for i in range(0, shape.num_parts):
+        coords[i] = (shape.part(i).x, shape.part(i).y)
+
+    return coords
+
+def pixel(frame, face, shape, block_size):
     left = face.left()
     top = face.top()
     right = face.right()
@@ -108,7 +116,17 @@ def pixel(frame, face, block_size):
             frame_result[ row:max_row,col:max_col,1 ] = np.mean( frame[ row:max_row,col:max_col,1 ] )
             frame_result[ row:max_row,col:max_col,2 ] = np.mean( frame[ row:max_row,col:max_col,2 ] )
 
-    return frame_result
+    points = __shape_to_np__(shape)
+    hull = cv.convexHull(points, False)
+
+    mask = np.zeros((frame.shape[0],frame.shape[1]), dtype='uint8')
+    cv.drawContours(mask, [hull], 0, (255,255,255), -1)
+    
+    result_mask = cv.bitwise_and(frame_result, frame_result, mask = mask)
+    not_mask = cv.bitwise_not(mask)
+    not_frame = cv.bitwise_and(frame, frame, mask = not_mask)
+
+    return cv.bitwise_or(result_mask, not_frame)
 
 def draw_sprite(frame, sprite, x_offset, y_offset):
     sprite_h, sprite_w = sprite.shape[0], sprite.shape[1]
