@@ -12,7 +12,7 @@ def draw_face(frame, shape):
     for point in shape.parts():
         cv.circle(frame, (point.x, point.y), 2, (0, 0, 255), cv.FILLED)
 
-def make_boundbox(points):
+def _make_boundbox(points):
     x = min(p.x for p in points)
     y = min(p.y for p in points)
     w = max(p.x for p in points) - x
@@ -32,7 +32,7 @@ def get_feature_boundbox(shape, face_part):
         points = chain.from_iterable(
             all_points[p1:p2] for p1,p2 in part_points[face_part]
         )
-        return make_boundbox(list(points))
+        return _make_boundbox(list(points))
     else:
         raise InvalidArgument("No face part named "+str(face_part))
 
@@ -48,7 +48,7 @@ def is_mouth_open(shape, threshold=10):
     bottom = points[66]
     return bottom.y - top.y >= threshold
 
-def rotate_image(image, angle):
+def _rotate_image(image, angle):
     height, width = image.shape[0], image.shape[1]
     cx, cy = width / 2, height / 2
 
@@ -70,11 +70,11 @@ def rotate_image(image, angle):
 def apply_sprite(frame, sprite, boundbox, angle):
     x, y, w, h = boundbox
     sprite = cv.imread(sprite, -1) # -1 for alpha
-    sprite = rotate_image(sprite, angle)
-    sprite, sprite_y = adjust_sprite(sprite, w, y)
+    sprite = _rotate_image(sprite, angle)
+    sprite, sprite_y = _adjust_sprite(sprite, w, y)
     image = draw_sprite(frame, sprite, x, sprite_y)
 
-def adjust_sprite(sprite, head_width, head_y):
+def _adjust_sprite(sprite, head_width, head_y):
     sprite_height, sprite_width = sprite.shape[0], sprite.shape[1]
     factor = float(head_width/sprite_width)
 
@@ -98,7 +98,7 @@ def __shape_to_np__(shape, dtype="int"):
 
     return coords
 
-def pixel(frame, face, shape, block_size):
+def pixelate(frame, face, shape, block_size=20):
     left = face.left()
     top = face.top()
     right = face.right()
@@ -107,24 +107,24 @@ def pixel(frame, face, shape, block_size):
     frame_result = frame.copy()
 
     for row in range(top, bottom, block_size):
-        for col in range(left,right, block_size):
+        for col in range(left, right, block_size):
 
             max_col = min(col+block_size, right)
             max_row = min(row+block_size, bottom)
 
-            frame_result[ row:max_row,col:max_col,0 ] = np.mean( frame[ row:max_row,col:max_col,0 ] )
-            frame_result[ row:max_row,col:max_col,1 ] = np.mean( frame[ row:max_row,col:max_col,1 ] )
-            frame_result[ row:max_row,col:max_col,2 ] = np.mean( frame[ row:max_row,col:max_col,2 ] )
+            for c in range(3):
+                frame_result[row:max_row, col:max_col, c] = np.mean(
+                    frame[row:max_row, col:max_col, c])
 
     points = __shape_to_np__(shape)
     hull = cv.convexHull(points, False)
 
-    mask = np.zeros((frame.shape[0],frame.shape[1]), dtype='uint8')
-    cv.drawContours(mask, [hull], 0, (255,255,255), -1)
+    mask = np.zeros(frame.shape[:2], dtype='uint8')
+    cv.drawContours(mask, [hull], 0, (255,)*3, -1)
     
-    result_mask = cv.bitwise_and(frame_result, frame_result, mask = mask)
+    result_mask = cv.bitwise_and(frame_result, frame_result, mask=mask)
     not_mask = cv.bitwise_not(mask)
-    not_frame = cv.bitwise_and(frame, frame, mask = not_mask)
+    not_frame = cv.bitwise_and(frame, frame, mask=not_mask)
 
     return cv.bitwise_or(result_mask, not_frame)
 
