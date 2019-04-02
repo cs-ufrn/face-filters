@@ -64,7 +64,7 @@ class Camera(object):
                 shape = self.facemark_detector(gray, face)
 
                 if mode == 'pixelate':
-                    frame = pixelate(frame, face, shape, 20)
+                    frame = pixelate(frame, face, shape, block_size=20)
                 elif mode == 'blur':
                     frame = apply_blur(frame, shape)
                 elif mode == 'landmark':
@@ -75,8 +75,9 @@ class Camera(object):
                     if mode in Camera.EYE_SPRITES.keys():
                         leye = get_feature_boundbox(shape, 'leyebrow')
                         reye = get_feature_boundbox(shape, 'reyebrow')
-                        apply_sprite(frame, "sprites/"+Camera.EYE_SPRITES[mode][0], leye, inclination)
-                        apply_sprite(frame, "sprites/"+Camera.EYE_SPRITES[mode][1], reye, inclination)
+                        eye_sprites = Camera.EYE_SPRITES[mode]
+                        apply_sprite(frame, "sprites/"+eye_sprites[0], leye, inclination)
+                        apply_sprite(frame, "sprites/"+eye_sprites[1], reye, inclination)
                     if mode in ('rainbow', 'crazy') and is_mouth_open(shape, threshold=20):
                         mouth = get_feature_boundbox(shape, 'lips')
                         apply_sprite(frame, "sprites/rainbow.png", mouth, inclination)
