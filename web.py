@@ -4,10 +4,12 @@ import shutil
 from flask import Flask, render_template, request, \
     Response, send_file, redirect, url_for
 from camera import Camera
-from send_email import send_email
+from send_email import Email
 
 app = Flask(__name__)
 camera = None
+mail_server = None
+mail_conf = "static/mail_conf.json"
 
 def get_camera():
     global camera
@@ -15,6 +17,13 @@ def get_camera():
         camera = Camera()
 
     return camera
+
+def get_mail_server():
+    global mail_server
+    if not mail_server:
+        mail_server = Email(mail_conf)
+
+    return mail_server
 
 @app.route('/')
 def root():
@@ -52,8 +61,9 @@ def show_capture(timestamp):
     email_msg = None
     if request.method == 'POST':
         if request.form.get('email'):
-            print(path)
-            email_msg = send_email('static/{}'.format(path), request.form['email'])
+            email = get_mail_server()
+            email_msg = email.send_email('static/{}'.format(path), 
+                request.form['email'])
         else:
             email_msg = "Email field empty!"
 
