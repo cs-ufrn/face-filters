@@ -2,7 +2,8 @@ import cv2 as cv
 import dlib
 from time import localtime, strftime
 from track import draw_face, get_feature_boundbox, \
-    get_inclination, apply_sprite, is_mouth_open, drawing_frame, apply_blur, pixel
+    get_inclination, apply_sprite, is_mouth_open, drawing_frame, apply_blur, \
+    pixel
 
 class Camera(object):
     CAPTURES_DIR = "static/captures/"

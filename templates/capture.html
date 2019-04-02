@@ -2,30 +2,42 @@
   <head>
   	<link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='style.css') }}">
     <title>Facial Landmark Detection</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   </head>
   <body>
-  	<center>
+  	<center> 
 	    <img src="{{ url_for('static', filename=path) }}" alt="capture">
+      <div id="input-hidden">  
+        <form method="post">
+            <legend>Send image to your email</legend>
+            <input type="email" name="email" placeholder="Email">
+            <button type="submit">Send</button>
+        </form>
+          {% if email_msg %}
+            <strong>{{ email_msg }}</strong>
+          {% endif %}
+      </div>
       <p>
         <a href="{{ url_for('root') }}">
           <img src="{{ url_for('static',filename='back.png') }}" alt="go back" class="btn"> 
         </a>
-        <a href="{{ url_for('save', timestamp=stamp) }}">
-          <img src="{{ url_for('static',filename='save.png') }}" alt="save picture" class="btn">
+        <a href="#" id="email">
+          <img src="{{ url_for('static',filename='mail.png') }}" alt="send mail picture" class="btn">
         </a>
         <a href="{{ url_for('static', filename=path) }}" download>
           <img src="{{ url_for('static',filename='download.png') }}" alt="save picture" class="btn">
         </a>
-        <form method="post">
-          <legend>Send image to your email</legend>
-          <input type="email" name="email" placeholder="Email">
-          <button type="submit">Send</button>
-        </form>
-        {% if email_msg %}
-          <strong>{{ email_msg }}</strong>
-        {% endif %}
       </p>
 	  	</div>
 		</center>
   </body>
 </html>
+<script>
+  $(document).ready(function(){
+
+   $('#email').click(function () {
+      console.log("Clicando")    
+      $('#input-hidden').css({'visibility':'visible','display':'block'})
+    });
+ })
+</script>

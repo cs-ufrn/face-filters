@@ -35,11 +35,11 @@
         </select>
       </p>
 	    <img src="{{ url_for('video_feed', mode=mode) }}" alt="video feed">
-	    <p>
+	    <div>
         <a href="{{ url_for('capture', mode=mode) }}">
 	    	  <img src="{{ url_for('static',filename='picture.png') }}" alt="take picture" class="btn capture-button"> 
         </a>
-      </p>
+      </div>
 	  	</div>
 		</center>
   </body>
