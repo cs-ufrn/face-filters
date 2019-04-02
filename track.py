@@ -98,7 +98,7 @@ def __shape_to_np__(shape, dtype="int"):
 
     return coords
 
-def pixel(frame, face, shape, block_size):
+def pixelate(frame, face, shape, block_size):
     left = face.left()
     top = face.top()
     right = face.right()
