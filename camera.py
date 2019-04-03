@@ -66,7 +66,7 @@ class Camera(object):
                 if mode == 'pixelate':
                     frame = pixelate(frame, face, shape, block_size=20)
                 elif mode == 'blur':
-                    frame = apply_blur(frame, shape)
+                    frame = apply_blur(frame, face)
                 elif mode == 'landmark':
                     draw_face(frame, shape)
                 else:
