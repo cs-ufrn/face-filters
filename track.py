@@ -159,12 +159,10 @@ def draw_sprite(frame, sprite, x_offset, y_offset):
             frame[y_offset:bottom, x_offset:right, c] * (1.0 - sprite_alpha)
     return frame
 
-def apply_blur(frame, shape):
-   rect = shape.rect
-   x, y = rect.left(), rect.top()
-   w, h = rect.width(), rect.height()
+def apply_blur(frame, face):
+   x, y = face.left(), face.top()
+   w, h = face.width(), face.height()
    frame[y:y+h, x:x+w] = cv.blur(frame[y:y+h, x:x+w], (50, 50), 70)
-
    return frame
 
 if __name__ == "__main__":
