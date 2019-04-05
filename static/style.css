@@ -24,17 +24,23 @@ select{
 }
 
 .btn {
-	padding: 5px 8px 5px 8px;
+	padding: 2px 12px 2px 12px;
 	color:#0a0800;
-	font-size:24px;
+	font-size: 24px;
 	text-decoration:none;
 	font-weight:bold;
+}
+
+a > .btn {
+	width: 75px;
 }
 
 .btn:hover{
 	background-color: #EEE;
 }
 
-.capture-button{
-	width: 64px;
+#input-hidden{
+	visibility: hidden;
+	display: none;
+	margin-top: 5px;
 }
