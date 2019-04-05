@@ -26,7 +26,7 @@ class Email:
 
         if self.user and password:
             try:
-                self.client = smtplib.SMTP('smtp.gmail.com:587')
+                self.client = smtplib.SMTP('smtp.gmail.com:587', timeout=3)
                 print('server ok!') 
                 self.client.ehlo() # Can be omitted
                 self.client.starttls() # Secure the connection
@@ -36,10 +36,15 @@ class Email:
                 print("successfully logged in")
             except smtplib.SMTPException as e:
                 print("Error connecting:", e)
+            except socket.timeout as e:
+                print("Connection timed out:", e)
 
     def __del__(self):
         if self.client:
-            self.client.quit()
+            try:
+                self.client.quit()
+            except smtplib.SMTPServerDisconnected:
+                pass
 
     def send_email(self, attachments, receiver):
         if not self.client:
