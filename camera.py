@@ -1,9 +1,9 @@
 import cv2 as cv
 import dlib
 from time import localtime, strftime
-from track import draw_face, get_feature_boundbox, \
-    get_inclination, apply_sprite, is_mouth_open, drawing_frame, apply_blur, \
-    pixel
+from track import apply_sprite, apply_blur, \
+    draw_face, drawing_frame, get_feature_boundbox, \
+    get_inclination, is_mouth_open, pixelate
 
 class Camera(object):
     CAPTURES_DIR = "static/captures/"
@@ -12,6 +12,7 @@ class Camera(object):
         'hearts':('heart.png', 'heart.png'), 
         'CS':('CS.png', 'CS.png')}
     EYE_SPRITES['crazy'] = EYE_SPRITES['googly']
+    MASKS = tuple(m+"_mask" for m in ("vendetta", "hero", "groucho"))
 
     RESIZE_RATIO = 1.0
 
@@ -59,40 +60,34 @@ class Camera(object):
             frame = drawing_frame(gray)        
         else:
             faces = self.face_detector(gray, upsample_num_times=0)
-            for face in faces:                
-                if mode == 'pixel':
-                    frame = pixel(frame, face, 20)
+            for face in faces:
+                shape = self.facemark_detector(gray, face)
+
+                if mode == 'pixelate':
+                    frame = pixelate(frame, face, shape, block_size=20)
+                elif mode == 'blur':
+                    frame = apply_blur(frame, face)
+                elif mode == 'landmark':
+                    draw_face(frame, shape)
                 else:
-                    shape = self.facemark_detector(gray, face)
+                    inclination = get_inclination(shape)
 
-                    if mode != 'landmark':
-                        inclination = get_inclination(shape)
-
-                    if mode == 'landmark':
-                        draw_face(frame, shape)
                     if mode in Camera.EYE_SPRITES.keys():
                         leye = get_feature_boundbox(shape, 'leyebrow')
                         reye = get_feature_boundbox(shape, 'reyebrow')
-                        apply_sprite(frame, "sprites/"+Camera.EYE_SPRITES[mode][0], leye, inclination)
-                        apply_sprite(frame, "sprites/"+Camera.EYE_SPRITES[mode][1], reye, inclination)
+                        eye_sprites = Camera.EYE_SPRITES[mode]
+                        apply_sprite(frame, "sprites/"+eye_sprites[0], leye, inclination)
+                        apply_sprite(frame, "sprites/"+eye_sprites[1], reye, inclination)
                     if mode in ('rainbow', 'crazy') and is_mouth_open(shape, threshold=20):
                         mouth = get_feature_boundbox(shape, 'lips')
                         apply_sprite(frame, "sprites/rainbow.png", mouth, inclination)
                     if mode in ('clown', 'crazy'):
                         nose = get_feature_boundbox(shape, 'nose')
                         apply_sprite(frame, "sprites/clown_nose.png", nose, inclination)
-                    if mode in ('anon_mask',"incredibles_mask","who_mask"):
-                        if mode == "anon_mask":
-                            appearance = get_feature_boundbox(shape, 'face')
-                            apply_sprite(frame, "sprites/anon_mask.png", appearance, inclination)
-                        if mode == "incredibles_mask":
-                            appearance = get_feature_boundbox(shape, 'face')
-                            apply_sprite(frame, "sprites/incredibles_mask.png", appearance, inclination)
-                        if mode == "who_mask":
-                            appearance = get_feature_boundbox(shape, 'face')
-                            apply_sprite(frame, "sprites/who_mask.png", appearance, inclination)
-                    elif mode == "anon":
+
+                    if mode in Camera.MASKS:
                         appearance = get_feature_boundbox(shape, 'face')
-                        frame = apply_blur(frame, shape)
+                        sprite_file = "sprites/{}.png".format(mode)
+                        apply_sprite(frame, sprite_file, appearance, inclination)
         return frame
 

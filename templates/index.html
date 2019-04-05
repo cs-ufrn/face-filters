@@ -21,17 +21,17 @@
         
         <a href="{{ url_for('index', mode='crazy') }}" class='btn'>Crazy</a>
 
-        <a href="{{ url_for('index', mode='pixel') }}" class='btn'>Pixel</a>
+        <a href="{{ url_for('index', mode='pixelate') }}" class='btn'>Pixelate</a>
         
-        <a href="{{ url_for('index', mode='anon') }}" class='btn'>Anonymous</a>
+        <a href="{{ url_for('index', mode='blur') }}" class='btn'>Blur</a>
         
         <a href="{{ url_for('index', mode='drawing') }}" class='btn'>Drawing</a>
         
         <select id="mask" class="btn">
           <option selected>Mask</option>
-          <option value="{{ url_for('index', mode='anon_mask') }}">Hacker</option>
-          <option value="{{ url_for('index', mode='incredibles_mask') }}">Hero</option>
-          <option value="{{ url_for('index', mode='who_mask') }}">Who?</option>
+          <option value="{{ url_for('index', mode='vendetta_mask') }}">Vendetta</option>
+          <option value="{{ url_for('index', mode='hero_mask') }}">Hero</option>
+          <option value="{{ url_for('index', mode='groucho_mask') }}">Groucho</option>
         </select>
       </p>
 	    <img src="{{ url_for('video_feed', mode=mode) }}" alt="video feed">
