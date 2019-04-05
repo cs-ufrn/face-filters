@@ -13,10 +13,10 @@
             <input type="email" name="email" placeholder="Email">
             <button type="submit">Send</button>
         </form>
-          {% if email_msg %}
-            <strong>{{ email_msg }}</strong>
-          {% endif %}
       </div>
+      {% if email_msg %}
+        <p><strong>{{ email_msg }}</strong></p>
+      {% endif %}
       <p>
         <a href="{{ url_for('root') }}">
           <img src="{{ url_for('static',filename='back.png') }}" alt="go back" class="btn"> 
