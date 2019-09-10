@@ -1,4 +1,4 @@
-# face-filters
+# face-filters cs-ufrn
 A web + computer vision project which implements a facial tracker along with some real-time filters and effects.
 
 ## Environment/dependencies
