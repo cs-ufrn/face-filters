@@ -9,9 +9,12 @@
 	    <img src="{{ url_for('static', filename=path) }}" alt="capture">
       <div id="input-hidden">  
         <form method="post">
-            <legend>Send image to your email</legend>
-            <input type="email" name="email" placeholder="Email">
-            <button type="submit">Send</button>
+            <legend id="legend">Send image to your email</legend>
+            <input id="inputEmail" type="email" name="email" placeholder="Email">
+            <button id="send" type="submit">Send</button>
+
+
+
         </form>
       </div>
       {% if email_msg %}
@@ -19,13 +22,13 @@
       {% endif %}
       <p>
         <a href="{{ url_for('root') }}">
-          <img src="{{ url_for('static',filename='back.png') }}" alt="go back" class="btn"> 
+          <img src="{{ url_for('static',filename='back.png') }}" alt="go back" id="btns"> 
         </a>
         <a href="#" id="email">
-          <img src="{{ url_for('static',filename='mail.png') }}" alt="send mail picture" class="btn">
+          <img src="{{ url_for('static',filename='mail.png') }}" alt="send mail picture" id="btns">
         </a>
         <a href="{{ url_for('static', filename=path) }}" download>
-          <img src="{{ url_for('static',filename='download.png') }}" alt="save picture" class="btn">
+          <img src="{{ url_for('static',filename='download.png') }}" alt="save picture" id="btns">
         </a>
       </p>
 	  	</div>
