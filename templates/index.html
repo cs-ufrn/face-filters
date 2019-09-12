@@ -1,47 +1,75 @@
 <html>
   <head>
   	<link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='style.css') }}">
+    
+
     <title>Facial Landmark Detection</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
   </head>
   <body>
-  	<center>
-      <p class="menu-bar">
-        <a href="{{ url_for('index', mode='landmark') }}" class='btn'>Tracking</a>
+      <nav class="menu">
+      <ul>
+        <li class='itens'><a href="{{ url_for('index', mode='landmark') }}">Tracking</a></li>
         
-        <a href="{{ url_for('index', mode='rainbow') }}" class='btn'>Rainbow</a>
+        <li class="itens"><a href="{{ url_for('index', mode='rainbow') }}">Rainbow</a></li>
         
-        <a href="{{ url_for('index', mode='googly') }}" class='btn'>Googly</a>
+        <li class="itens"><a href="{{ url_for('index', mode='googly') }}">Googly</a></li>
         
-        <a href="{{ url_for('index', mode='clown') }}" class='btn'>Clown</a>
+        <li class="itens"><a href="{{ url_for('index', mode='clown') }}">Clown</a></li>
         
-        <a href="{{ url_for('index', mode='hearts') }}" class='btn'>Hearts</a>
+        <li class="itens"><a href="{{ url_for('index', mode='hearts') }}">Hearts</a></li>
         
-        <a href="{{ url_for('index', mode='CS') }}" class='btn'>CS</a>
+        <li class="itens"><a href="{{ url_for('index', mode='CS') }}">CS</a></li>
         
-        <a href="{{ url_for('index', mode='crazy') }}" class='btn'>Crazy</a>
+        <li class="itens"><a href="{{ url_for('index', mode='crazy') }}">Crazy</a></li>
 
-        <a href="{{ url_for('index', mode='pixelate') }}" class='btn'>Pixelate</a>
+        <li class="itens"><a href="{{ url_for('index', mode='pixelate') }}" >Pixelate</a></li>
         
-        <a href="{{ url_for('index', mode='blur') }}" class='btn'>Blur</a>
+        <li class="itens"><a href="{{ url_for('index', mode='blur') }}">Blur</a></li>
         
-        <a href="{{ url_for('index', mode='drawing') }}" class='btn'>Drawing</a>
+        <li class="itens"><a href="{{ url_for('index', mode='drawing') }}" >Drawing</a></li>
+       
+        <li id="contatos" class="itens" onClick="mostrar('redes')"><a href="#">Contatos</a></li>
+
+      </ul>
+
+    </nav>
+
+     <div id="redes" class="hidden"  >
+          <!-- target="_blank é para abrir o link em uma nova aba" -->
+            <li id="instagram" class="cont"><a href="https://www.instagram.com/ieeeufrn/?hl=en" target="_blank">Acesse o nosso Instagram</a></li> 
+          <li id="facebook" class="cont"><a href="https://www.facebook.com/csufrn/" target="_blank">Acesse o nosso Facebook</a></li>
+
+          <li id="email" >E-mail: ufrnieee@gmail.com</a></li>
+        </div>
         
-        <select id="mask" class="btn">
-          <option selected>Mask</option>
-          <option value="{{ url_for('index', mode='vendetta_mask') }}">Vendetta</option>
-          <option value="{{ url_for('index', mode='hero_mask') }}">Hero</option>
-          <option value="{{ url_for('index', mode='groucho_mask') }}">Groucho</option>
-        </select>
-      </p>
-	    <img src="{{ url_for('video_feed', mode=mode) }}" alt="video feed">
-	    <div>
-        <a href="{{ url_for('capture', mode=mode) }}">
-	    	  <img src="{{ url_for('static',filename='picture.png') }}" alt="take picture" class="btn capture-button"> 
-        </a>
-      </div>
-	  	</div>
-		</center>
+        <div id="div1">
+
+            <select  id="mask" selected class="btn">
+                <option >Mask</option>
+                <option value="{{ url_for('index', mode='vendetta_mask') }}">Vendetta</option>
+                <option value="{{ url_for('index', mode='hero_mask') }}">Hero</option>
+                <option value="{{ url_for('index', mode='groucho_mask') }}">Groucho</option>
+            </select>
+
+          </p>
+        </div>
+        <div id="div2">
+              <a href="{{ url_for('capture', mode=mode) }}">
+                  <img src="{{ url_for('static',filename='picture.png') }}" alt="take picture" class="btn capture-button"> 
+              </a>
+          </div>
+
+            <div id="camera">
+    	         <img src="{{ url_for('video_feed', mode=mode) }}" alt="video feed">
+    	       </div>
+          
+
+        </div>
+	  	
+		
   </body>
 </html>
 
@@ -56,4 +84,20 @@ $(document).ready(function(){
          return false;
        });
     });
+
+
+function mostrar(id){
+    if(document.getElementById(id).style.display == 'block'){
+      document.getElementById(id).style.display = 'none'; 
+
+    }
+    else{
+      
+      document.getElementById(id).style.display = 'block';
+
+
+    }
+    
+
+  }
 </script>
