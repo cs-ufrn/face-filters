@@ -36,6 +36,54 @@
       </ul>
 
     </nav>
+	  
+	   <!-- Here is our Slider for Dark/Light  mode -->
+		  
+		 <div class="theme-switch-wrapper">
+			 
+    	<label class="theme-switch" for="checkbox">
+        	<input type="checkbox" id="checkbox" />
+			<div class="slider round"></div>
+  		</label>
+			 
+			 <em class= "ha"> Dark Mode </em>
+  			
+	  	</div>
+		
+			<!-- Script To save user's dark/light prefereces and to switch between dark and light --> 
+	  
+	  <script>
+		  
+		  const toggleSwitch = document.querySelector('.theme-switch input[type="checkbox"]');
+
+		  	function switchTheme(e) {
+    			if (e.target.checked) {
+        			document.documentElement.setAttribute('data-theme', 'dark');
+					localStorage.setItem('theme', 'dark');
+				}
+    			else {
+        			document.documentElement.setAttribute('data-theme', 'light');
+					localStorage.setItem('theme', 'light'); 
+    			}	    
+		  	}
+
+		  toggleSwitch.addEventListener('change', switchTheme, false);
+		  
+		  
+		  const currentTheme = localStorage.getItem('theme') ? localStorage.getItem('theme') : null;
+
+		 	if (currentTheme) {
+    			document.documentElement.setAttribute('data-theme', currentTheme);
+
+    	 		if (currentTheme === 'dark') {
+        			toggleSwitch.checked = true;
+    			}
+			}
+	  
+	  
+	  </script>
+		
+		<!-- End of Dark/Light mode -->
 
      <div id="redes" class="hidden"  >
           <!-- target="_blank é para abrir o link em uma nova aba" -->
