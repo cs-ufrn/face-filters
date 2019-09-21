@@ -1,0 +1,96 @@
+<html>
+  <head>
+  	<link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='style.css') }}">
+    <title>Facial Landmark Detection</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  </head>
+  <body>
+	  
+	 <!-- Here is our Slider for Dark/Light  mode -->
+		  
+		 <div class="theme-switch-wrapper">
+			 
+    	<label class="theme-switch" for="checkbox">
+        	<input type="checkbox" id="checkbox" />
+			<div class="slider round"></div>
+  		</label>
+			 
+			 <em class= "ha"> Dark Mode </em>
+  			
+	  	</div>
+		
+			<!-- Script To save user's dark/light prefereces and to switch between dark and light --> 
+	  
+	  <script>
+		  
+		  const toggleSwitch = document.querySelector('.theme-switch input[type="checkbox"]');
+
+		  	function switchTheme(e) {
+    			if (e.target.checked) {
+        			document.documentElement.setAttribute('data-theme', 'dark');
+					localStorage.setItem('theme', 'dark');
+				}
+    			else {
+        			document.documentElement.setAttribute('data-theme', 'light');
+					localStorage.setItem('theme', 'light'); 
+    			}	    
+		  	}
+
+		  toggleSwitch.addEventListener('change', switchTheme, false);
+		  
+		  
+		  const currentTheme = localStorage.getItem('theme') ? localStorage.getItem('theme') : null;
+
+		 	if (currentTheme) {
+    			document.documentElement.setAttribute('data-theme', currentTheme);
+
+    	 		if (currentTheme === 'dark') {
+        			toggleSwitch.checked = true;
+    			}
+			}
+	  
+	  
+	  </script>
+		
+		<!-- End of Dark/Light mode -->
+	  
+	  
+  	<center> 
+	    <img id="photo" src="{{ url_for('static', filename=path) }}" alt="capture">
+      <div id="input-hidden">  
+        <form method="post">
+            <legend id="legend">Send image to your email</legend>
+            <input id="inputEmail" type="email" name="email" placeholder="Email">
+            <button id="send" type="submit">Send</button>
+
+
+
+        </form>
+      </div>
+      {% if email_msg %}
+        <p><strong>{{ email_msg }}</strong></p>
+      {% endif %}
+      <p>
+        <a href="{{ url_for('root') }}">
+          <img src="{{ url_for('static',filename='back.png') }}" alt="go back" id="btns"> 
+        </a>
+        <a href="#" id="email">
+          <img src="{{ url_for('static',filename='mail.png') }}" alt="send mail picture" id="btns">
+        </a>
+        <a href="{{ url_for('static', filename=path) }}" download>
+          <img src="{{ url_for('static',filename='download.png') }}" alt="save picture" id="btns">
+        </a>
+      </p>
+	  	</div>
+		</center>
+  </body>
+</html>
+<script>
+  $(document).ready(function(){
+
+   $('#email').click(function () {
+      console.log("Clicando")    
+      $('#input-hidden').css({'visibility':'visible','display':'block'})
+    });
+ })
+</script>

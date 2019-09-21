@@ -1,0 +1,145 @@
+<html>
+  <head>
+  	<link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='style.css') }}">
+    
+
+    <title>Facial Landmark Detection</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+  </head>
+  <body>
+      <nav class="menu">
+      <ul>
+        <li class='itens'><a href="{{ url_for('index', mode='landmark') }}">Tracking</a></li>
+        
+        <li class="itens"><a href="{{ url_for('index', mode='rainbow') }}">Rainbow</a></li>
+        
+        <li class="itens"><a href="{{ url_for('index', mode='googly') }}">Googly</a></li>
+        
+        <li class="itens"><a href="{{ url_for('index', mode='clown') }}">Clown</a></li>
+        
+        <li class="itens"><a href="{{ url_for('index', mode='hearts') }}">Hearts</a></li>
+        
+        <li class="itens"><a href="{{ url_for('index', mode='CS') }}">CS</a></li>
+        
+        <li class="itens"><a href="{{ url_for('index', mode='crazy') }}">Crazy</a></li>
+
+        <li class="itens"><a href="{{ url_for('index', mode='pixelate') }}" >Pixelate</a></li>
+        
+        <li class="itens"><a href="{{ url_for('index', mode='blur') }}">Blur</a></li>
+        
+        <li class="itens"><a href="{{ url_for('index', mode='drawing') }}" >Drawing</a></li>
+       
+        <div class="div-select">
+            <select  id="mask"  >
+                <option >Mask</option>
+                <option value="{{ url_for('index', mode='vendetta_mask') }}">Vendetta</option>
+                <option value="{{ url_for('index', mode='hero_mask') }}">Hero</option>
+                <option value="{{ url_for('index', mode='groucho_mask') }}">Groucho</option>
+            </select>
+
+          </div>
+
+      </ul>
+
+    </nav>
+	  
+	   <!-- Here is our Slider for Dark/Light  mode -->
+		  
+		 <div class="theme-switch-wrapper">
+			 
+    	<label class="theme-switch" for="checkbox">
+        	<input type="checkbox" id="checkbox" />
+			<div class="slider round"></div>
+  		</label>
+			 
+			 <em class= "ha"> Dark Mode </em>
+  			
+	  	</div>
+		
+			<!-- Script To save user's dark/light prefereces and to switch between dark and light --> 
+	  
+	  <script>
+		  
+		  const toggleSwitch = document.querySelector('.theme-switch input[type="checkbox"]');
+
+		  	function switchTheme(e) {
+    			if (e.target.checked) {
+        			document.documentElement.setAttribute('data-theme', 'dark');
+					localStorage.setItem('theme', 'dark');
+				}
+    			else {
+        			document.documentElement.setAttribute('data-theme', 'light');
+					localStorage.setItem('theme', 'light'); 
+    			}	    
+		  	}
+
+		  toggleSwitch.addEventListener('change', switchTheme, false);
+		  
+		  
+		  const currentTheme = localStorage.getItem('theme') ? localStorage.getItem('theme') : null;
+
+		 	if (currentTheme) {
+    			document.documentElement.setAttribute('data-theme', currentTheme);
+
+    	 		if (currentTheme === 'dark') {
+        			toggleSwitch.checked = true;
+    			}
+			}
+	  
+	  
+	  </script>
+		
+		<!-- End of Dark/Light mode -->
+
+    <div id="div2" >
+              <a href="{{ url_for('capture', mode=mode) }}">
+                  <img src="{{ url_for('static',filename='picture.png') }}" alt="take picture" class="btn capture-button"> 
+              </a>
+          </div>
+              <button class="contatos" class="itens" onClick="mostrar('redes')">Contatos</button>
+              <div id="redes" class="hidden"  >
+                <!-- target="_blank é para abrir o link em uma nova aba" -->
+                 <li id="instagram" class="cont"><a href="https://www.instagram.com/ieeeufrn/?hl=en" target="_blank">Acesse o nosso Instagram</a></li> 
+                <li id="facebook" class="cont"><a href="https://www.facebook.com/csufrn/" target="_blank">Acesse o nosso Facebook</a></li>
+
+                <li id="email" >E-mail: ufrnieee@gmail.com</li>
+            </div>
+
+          <div id="camera">
+                
+                   <img src="{{ url_for('video_feed', mode=mode) }}" alt="video feed">
+               
+             </div>
+            
+
+  </body>
+</html>
+
+<script>
+$(document).ready(function(){
+
+   $('#mask').on('change', function () {
+        var url = $(this).val(); 
+        if (url) { 
+            window.location.href  = url;
+         }
+         return false;
+       });
+    });
+
+
+function mostrar(id){
+    if(document.getElementById(id).style.display == 'block'){
+      document.getElementById(id).style.display = 'none'; 
+
+    }
+    else{
+      
+      document.getElementById(id).style.display = 'block';
+    }
+  }
+
+ 
+</script>

@@ -1,0 +1,345 @@
+body {
+	color: var(--font-color);
+	font-family:Arial, Helvetica, sans-serif;
+	background-color: var(--bg-color) !important;
+
+	margin: 0;
+	padding: 0;
+}
+
+.div-select select  {
+	  background-color: var(--primary-color); 
+      font-size:16pt; /* Tamanho da Fonte */
+      padding:  9px; /* Configurações de padding para posicionar o texto no campo */
+      color: var(--font-color);
+      border: solid 1px #363636;
+      
+}
+.div-select select:hover {    
+    border-color: var(--secondary-color);
+	border-style: inset;
+	border-width: 0px;
+	cursor: pointer;
+	cursor: hand;
+	transition: 0.4s;
+	opacity: 0.3;   
+}
+
+
+.btn {	
+	color: #fff !important;
+	font-size: 24px !important;
+	width: 100px ; 
+	font-weight:bold;
+	border: solid #FF8C00 transparent !important;
+	display: flex;
+	box-shadow: 3px 5px #363b3f;
+}
+.btn:hover{
+	background-color: var(--secondary-color);
+	cursor: pointer;
+	border: solid var(--secondary-color) !important;
+	box-shadow: 4px 5px #2a2d30;
+	
+}
+.btn:active{	
+	
+	box-shadow: none;
+}
+
+
+#btns{
+	position: relative;
+	width: 50px;
+	padding:6px; 
+	margin: 10px; 
+	box-shadow: 3px 5px #363b3f;
+
+}
+#btns:hover{
+	background-color: #363b3f;
+	box-shadow: 4px 5px #2a2d30;
+}
+#btns:active{
+	top: 5px;
+	box-shadow: none;
+}
+
+
+#legend{
+	color:  var(--font-color);
+	font-family:Verdana;
+	font-weight:bold;
+	font-size:13px;
+}
+
+
+#send{	
+	border: none;
+	display:inline-block;
+	cursor:pointer;
+	font-family:Verdana;
+	font-size:13px;
+	font-weight: 700;
+	padding:6px 10px;
+	background: var(--secondary-color);
+    color: var(--font-color);
+    box-shadow: 2px 5px #363b3f;
+}
+#send:hover{
+	background-color: #363b3f;
+	box-shadow: 2px 5px #2a2d30;
+}
+#send:active{
+	top: 5px;
+	box-shadow: none;
+
+}
+
+
+#inputEmail{
+	border-radius:4px;
+    -moz-border-radius:4px;
+    -webkit-border-radius:4px;
+    box-shadow: 1px 1px 2px #333333;    
+    -moz-box-shadow: 1px 1px 2px #333333;
+    -webkit-box-shadow: 1px 1px 2px #333333;
+    background: #cccccc; 
+    border:1px solid #000000;
+    width:150px
+}
+
+
+#div2{
+	padding-top: 20%;
+	padding-left:  40px;
+	float: right;
+	margin-right: 10%; 
+	margin-top: -10%;
+}
+#div2:active{
+	top: 5px;
+	box-shadow: none;
+}
+
+
+#input-hidden{
+	visibility: hidden;
+	margin-top: 5px;
+	display: none;
+}
+
+
+.menu{
+	font-size: 16pt;
+	width: 100%;
+	position: fixed;
+}
+.menu ul{
+	list-style: none;
+	display: flex;
+	text-align: center;
+	margin-left: -45px; /*Tive que usar isso para que o menu ficasse alinhado do lado esquerdo*/
+}
+.menu ul li {
+	margin-left: 0px;
+	padding: 6px;
+	flex-grow: 1;
+	transition: background-color .2s linear;
+	border: solid 1px #363636;
+}
+.menu ul li a{
+	text-decoration: none;
+	color: var(--font-color);
+}
+
+
+#camera{
+	padding-top: 8%;
+	margin-left: 25%;
+}
+#camera img{
+	border: solid 5px ;
+}
+#camera img:active{
+	transform: scale3d(1.2, 1.2, 1.2);
+	transition: 1s;
+}
+
+
+#photo{
+	margin-top: 4%;
+	border: solid 5px #272a2d;
+	box-shadow: 2px 3px #2a2d30;
+}
+#photo:active{
+	margin-top: 4%;
+	transform: scale3d(1.2, 1.2, 1.2);
+	transition: 1s;
+}
+
+
+.itens{
+	background-color: var(--primary-color);
+}
+
+
+.contatos{
+	position: absolute;
+	background-color: var(--primary-color);
+	margin-top: 12%;
+	font-weight: 700;
+	border: solid 1px #363636;
+	padding: 10px;
+	color: var(--font-color);
+	box-shadow: 3px 5px #363b3f;
+}
+.contatos:hover{
+	background-color: var(--primary-color);
+	box-shadow: 4px 5px #2a2d30;
+}
+.contatos:active{
+	top: 5px;
+	box-shadow: none;
+}
+
+
+.menu ul li:hover{
+	border-color: var(--secondary-color);
+	border-style: inset;
+	border-width: 0px;
+	cursor: pointer;
+	cursor: hand;
+	transition: 0.4s;
+	opacity: 0.3;
+}
+
+
+/*Isso aqui serve para organizar a navbar quando
+a tela estiver em tamanho menor*/
+@media (max-width: 520px){
+	.menu ul{
+		display: block;
+	}
+}
+
+.hidden{
+	display: none;
+	border-color: var(--secondary-color);
+	border-style: inset;
+	border-width: 8px;
+	margin-top: 16%;
+	float: left;
+	list-style: none;
+	font-weight: 700;
+	font-size: 13pt;
+	padding: 4px;
+	color: var(--font-color);
+	position: absolute;
+	box-shadow: 3px 5px #363b3f;
+}
+.hidden.hide{
+	opacity: 0;
+}
+
+
+.cont a{
+	color: var(--font-color);
+	border-width: 2px;
+}
+.cont a:hover{
+	transition: 0.5s;
+	color: #6A5ACD	;
+}
+
+	/* This part is for the Dark/ Light mode */
+
+/* we'll be creating a pseudo class called root as our default mode, or light mode */
+
+html{
+	--primary-color: navajoWhite;
+    --secondary-color: PapayaWhip;
+    --font-color: black;
+    --bg-color: Azure;
+    --heading-color: black;
+}
+
+
+html[data-theme="dark"] {
+    --primary-color: #1a1a1a;
+    --secondary-color: #818cab;
+    --font-color: #9FB1B2;
+    --bg-color: #414950;
+    --heading-color: #818cab;	
+}
+
+/*Style for our toggle button dark/light mode */
+
+.theme-switch-wrapper {
+	position: absolute;
+	top: 10%;
+	left: 30px;
+  	display: flex;
+  	align-items: center;
+}
+
+
+.ha{
+	position: relative;
+	left: -70px;
+	top: 30px;
+    font-size: 1rem;
+}
+
+
+.theme-switch {
+  	display: inline-block;
+  	height: 34px;
+  	position: relative;
+  	width: 60px;
+}
+
+
+.theme-switch input {
+  	display:none;
+}
+
+
+.slider {
+  	background-color: #ccc;
+  	bottom: 0;
+  	cursor: pointer;
+  	left: 0;
+  	position: absolute;
+	right: 0;
+  	top: 0;
+  	transition: .4s;
+}
+
+.slider:before {
+  	background-color: #fff;
+  	bottom: 4px;
+  	content: "";
+  	height: 26px;
+  	left: 4px;
+  	position: absolute;
+  	transition: .4s;
+  	width: 26px;
+}
+
+input:checked + .slider {
+  background-color: #66bb6a;
+}
+input:checked + .slider:before {
+  transform: translateX(26px);
+}
+
+
+.slider.round {
+  border-radius: 34px;
+}
+.slider.round:before {
+  border-radius: 50%;
+}
+
+
