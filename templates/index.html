@@ -31,7 +31,15 @@
         
         <li class="itens"><a href="{{ url_for('index', mode='drawing') }}" >Drawing</a></li>
        
-        <li id="contatos" class="itens" onClick="mostrar('redes')"><a href="#">Contatos</a></li>
+        <div class="div-select">
+            <select  id="mask"  >
+                <option >Mask</option>
+                <option value="{{ url_for('index', mode='vendetta_mask') }}">Vendetta</option>
+                <option value="{{ url_for('index', mode='hero_mask') }}">Hero</option>
+                <option value="{{ url_for('index', mode='groucho_mask') }}">Groucho</option>
+            </select>
+
+          </div>
 
       </ul>
 
@@ -85,39 +93,27 @@
 		
 		<!-- End of Dark/Light mode -->
 
-     <div id="redes" class="hidden"  >
-          <!-- target="_blank é para abrir o link em uma nova aba" -->
-            <li id="instagram" class="cont"><a href="https://www.instagram.com/ieeeufrn/?hl=en" target="_blank">Acesse o nosso Instagram</a></li> 
-          <li id="facebook" class="cont"><a href="https://www.facebook.com/csufrn/" target="_blank">Acesse o nosso Facebook</a></li>
-
-          <li id="email" >E-mail: ufrnieee@gmail.com</a></li>
-        </div>
-        
-        <div id="div1">
-
-            <select  id="mask" selected class="btn">
-                <option >Mask</option>
-                <option value="{{ url_for('index', mode='vendetta_mask') }}">Vendetta</option>
-                <option value="{{ url_for('index', mode='hero_mask') }}">Hero</option>
-                <option value="{{ url_for('index', mode='groucho_mask') }}">Groucho</option>
-            </select>
-
-          </p>
-        </div>
-        <div id="div2">
+    <div id="div2" >
               <a href="{{ url_for('capture', mode=mode) }}">
                   <img src="{{ url_for('static',filename='picture.png') }}" alt="take picture" class="btn capture-button"> 
               </a>
           </div>
+              <button class="contatos" class="itens" onClick="mostrar('redes')">Contatos</button>
+              <div id="redes" class="hidden"  >
+                <!-- target="_blank é para abrir o link em uma nova aba" -->
+                 <li id="instagram" class="cont"><a href="https://www.instagram.com/ieeeufrn/?hl=en" target="_blank">Acesse o nosso Instagram</a></li> 
+                <li id="facebook" class="cont"><a href="https://www.facebook.com/csufrn/" target="_blank">Acesse o nosso Facebook</a></li>
 
-            <div id="camera">
-    	         <img src="{{ url_for('video_feed', mode=mode) }}" alt="video feed">
-    	       </div>
-          
+                <li id="email" >E-mail: ufrnieee@gmail.com</li>
+            </div>
 
-        </div>
-	  	
-		
+          <div id="camera">
+                
+                   <img src="{{ url_for('video_feed', mode=mode) }}" alt="video feed">
+               
+             </div>
+            
+
   </body>
 </html>
 
@@ -142,10 +138,8 @@ function mostrar(id){
     else{
       
       document.getElementById(id).style.display = 'block';
-
-
     }
-    
-
   }
+
+ 
 </script>
