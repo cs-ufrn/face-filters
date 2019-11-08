@@ -17,7 +17,7 @@ class Email:
         try:
             with open(conf_file) as config:
                 data = json.load(config)
-                self.user = data['address']
+                self.user = data['email']
                 password = data['password']
         except KeyError as e:
             print("Failed to load email configuaration", e)

@@ -1,0 +1,13 @@
+version: '2.0'
+
+services:
+    face-filters-app:
+        container_name: face-filters
+        build:
+            context: .
+            dockerfile: Dockerfile
+        devices:
+            - /dev/video0:/dev/video0
+        ports:
+            - '8080:8080'
+        command: python3 web.py
