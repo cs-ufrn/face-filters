@@ -8,7 +8,15 @@ from email.header import Header
 
 import mimetypes
 
+# Discription : Class Email
+
 class Email:
+    
+    # Discription: function __init__ to inicialize our object Email. Constructor of Email.
+    # Synopsis : __init__(self, conf_file)
+    # Parameters : conf_file.
+    # return value : none.
+    
     def __init__(self, conf_file):
         self.client = None
         self.user = None
@@ -17,7 +25,7 @@ class Email:
         try:
             with open(conf_file) as config:
                 data = json.load(config)
-                self.user = data['email']
+                self.user = data['address']
                 password = data['password']
         except KeyError as e:
             print("Failed to load email configuaration", e)
@@ -39,6 +47,12 @@ class Email:
                 print("Error connecting:", e)
             except socket.timeout as e:
                 print("Connection timed out:", e)
+                
+                
+    # Discription : this function is to quit hte aplication.
+    # Synopsis : __del__(self).
+    # Parameters : none.
+    # return value : none.
 
     def __del__(self):
         if self.client:
@@ -46,6 +60,11 @@ class Email:
                 self.client.quit()
             except smtplib.SMTPServerDisconnected:
                 pass
+
+    # Discription : This function e going to send an e-mail. 
+    # Synopsis : send_email(self, attachments, receiver).
+    # Parameters : attachments. receiver.
+    # return value : depending on whether or not the function runs, a successful or an error message will be returned
 
     def send_email(self, attachments, receiver):
         if not self.client:
@@ -64,6 +83,11 @@ class Email:
         else:
             return "Email sent successfully!"
 
+    # Discription : This function takes a path and attach this path to msg in the head. 
+    # Synopsis : _get_attach_msg(path).
+    # Parameters : path.
+    # return value : It returns a message. 
+
     def _get_attach_msg(path):
         fp = open(path, 'rb')
         msg = MIMEImage(fp.read())
@@ -71,6 +95,8 @@ class Email:
         # Set the filename parameter
         msg.add_header('Content-Disposition', 'attachment', filename=path.split('/')[-1])
         return msg
+
+    # Hehe
 
     def _make_mime(mail_from, mail_to, subject, body, attach_path):
         '''create MIME'''

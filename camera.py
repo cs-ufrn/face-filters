@@ -5,6 +5,8 @@ from track import apply_sprite, apply_blur, \
     draw_face, drawing_frame, get_feature_boundbox, \
     get_inclination, is_mouth_open, pixelate
 
+# Class Camera
+
 class Camera(object):
     CAPTURES_DIR = "static/captures/"
     LANDMARKS_PATH = "shape_predictor_68_face_landmarks.dat"
@@ -15,6 +17,11 @@ class Camera(object):
     MASKS = tuple(m+"_mask" for m in ("vendetta", "hero", "groucho"))
 
     RESIZE_RATIO = 1.0
+    
+    # Discription :
+    # Synopsis :
+    # Parameters :
+    # Return value : 
 
     def __init__(self):
         self.video = cv.VideoCapture(0)
@@ -24,9 +31,20 @@ class Camera(object):
 
         # load facemark detector
         self.facemark_detector = dlib.shape_predictor(Camera.LANDMARKS_PATH)
+
+    # Discription : Releases the video capture.
+    # Synopsis : __del__(self)
+    # Parameters : none.
+    # Return value : none.
+
     
     def __del__(self):
         self.video.release()
+    
+    # Discription : This functins takes a video capture  with the selected mode. 
+    # Synopsis : get_frame(self, mode)
+    # Parameters : mode, selected mode.
+    # Return value : returns a image in format jpeg, if it was usccessful, if not return nothing.
     
     def get_frame(self, mode):
         success, frame = self.video.read()
@@ -41,6 +59,11 @@ class Camera(object):
         ret, jpeg = cv.imencode('.jpg', frame)
         return jpeg.tobytes()
 
+    # Discription :
+    # Synopsis : capture(self, mode)
+    # Parameters : mode, selected mode.
+    # Return value : Não entendi
+
     def capture(self, mode):
         _, frame = self.video.read()
         if (Camera.RESIZE_RATIO != 1):
@@ -53,6 +76,11 @@ class Camera(object):
         if not cv.imwrite(filename, frame):
             raise RuntimeError("Unable to capture image "+timestamp)
         return timestamp
+
+    # Discription : This functions takes the frame and then mix with the selected mode. 
+    # Synopsis : facemark(self, frame, mode)
+    # Parameters : frame, video capture. mode, selected mode.
+    # Return value : Its returns de frame with the selected mode. 
 
     def facemark(self, frame, mode):
         gray = cv.cvtColor(frame, cv.COLOR_BGR2GRAY)
